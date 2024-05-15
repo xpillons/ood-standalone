@@ -43,9 +43,7 @@ printf "$columns" Python `python3 --version | awk '{ print $2 }'`
 printf "$columns" Ansible `ansible --version | head -n 1 | awk '{ print $3 }' | sed 's/]//'`
 printf "===============================================================================\n"
 
-if [ $INSTALL_IN_CONDA = true ]; then
-    yellow=$'\e[1;33m'
-    default=$'\e[0m'
-    printf "\n${yellow}Dependencies installed in a conda environment${default}. To activate, run:\n"
-    printf "\nsource %s/bin/activate\n\n" "${MINICONDA_INSTALL_DIR}"
-fi
+yellow=$'\e[1;33m'
+default=$'\e[0m'
+printf "\n${yellow}Dependencies installed in a conda environment${default}. To activate, run:\n"
+printf "\nsource %s/bin/activate\n\n" "${MINICONDA_INSTALL_DIR}"
