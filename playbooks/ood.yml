@@ -78,8 +78,6 @@
           AddExternalAuth pwauth /usr/bin/pwauth
           SetExternalAuthMethod pwauth pipe
     when: 
-      - authentication.httpd_auth is defined
-      - authentication.httpd_auth == 'basic'
       - ansible_distribution in ['AlmaLinux']
 
   # temporary workaround waiting for this https://github.com/OSC/ood-ansible/issues/222
@@ -92,8 +90,6 @@
           AddExternalAuth pwauth /usr/sbin/pwauth
           SetExternalAuthMethod pwauth pipe
     when: 
-      - authentication.httpd_auth is defined
-      - authentication.httpd_auth == 'basic'
       - ansible_distribution in ['Ubuntu']
 
   - name: Ensure apache is restarted
