@@ -33,6 +33,11 @@ conda update -y --all
 printf "Installing Ansible\n"
 python3 -m pip install -r ${THIS_DIR}/requirements.txt
 
+# Install dependencies
+printf "Installing dependencies\n"
+ansible-playbook ${THIS_DIR}/dependencies.yml
+
+
 printf "\n\n"
 printf "Applications installed\n"
 printf "===============================================================================\n"
