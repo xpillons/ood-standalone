@@ -46,6 +46,7 @@ printf "$columns" Application Version
 printf -- "-------------------------------------------------------------------------------\n"
 printf "$columns" Python `python3 --version | awk '{ print $2 }'`
 printf "$columns" Ansible `ansible --version | head -n 1 | awk '{ print $3 }' | sed 's/]//'`
+printf "$columns" yq `yq --version | awk '{ print $4 }'`
 printf "===============================================================================\n"
 
 yellow=$'\e[1;33m'
