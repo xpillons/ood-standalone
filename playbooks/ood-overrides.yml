@@ -1,5 +1,14 @@
 ---
-#clusters:
+clusters:
+  ccsw:
+    v2:
+      metadata:
+        title: CCSW - Cluster
+      login:
+        host: ccsw-login-1
+      job:
+        host: ccsw-scheduler
+        adapter: slurm
 
 ood_apps:
   dashboard:
