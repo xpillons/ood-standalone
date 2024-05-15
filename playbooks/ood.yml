@@ -41,6 +41,8 @@
 
   - name: Generate a Self Signed OpenSSL certificate
     shell: |
+      mkdir -pv /etc/ssl/{{ ansible_default_ipv4.address }}
+      cd /etc/ssl/{{ ansible_default_ipv4.address }}
       openssl req -nodes -new -x509 -keyout {{ ansible_default_ipv4.address }}.key -out {{ ansible_default_ipv4.address }}.crt -subj "/CN={{ ansible_default_ipv4.address }}"
     args:
       creates: "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.crt"
