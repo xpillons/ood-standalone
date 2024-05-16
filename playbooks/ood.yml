@@ -54,7 +54,6 @@
       ondemand_package: '{{ ood_package }}'
       servername: '{{ ansible_default_ipv4.address }}'
       httpd_port: 443
-#      oidc_client_secret: '{{ oidc_secret.stdout | default(None)}}'
       ssl:
       - SSLCertificateFile "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.crt"
       - SSLCertificateKeyFile "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.key"
@@ -114,3 +113,15 @@
     when: 
       - ansible_distribution == 'Ubuntu'
 
+  - name: Install NFS dependencies packages for Ubuntu
+    apt:
+      name: nfs-common
+      state: latest
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Install NFS dependencies packages for AlmaLinux
+    yum:
+      name: nfs-utils
+      state: latest
+      lock_timeout : 180
+    when: ansible_distribution == 'AlmaLinux'

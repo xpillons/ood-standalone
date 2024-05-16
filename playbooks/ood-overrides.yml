@@ -10,10 +10,10 @@ clusters:
         host: ccsw-scheduler
         adapter: slurm
 
-ood_apps:
-  dashboard:
-    env:
-      ood_bc_dynamic_js: true
+# ood_apps:
+#   dashboard:
+#     env:
+#       ood_bc_dynamic_js: true
 #      file_upload_max: "{{ondemand.file_upload_max | default(omit)}}"
 
 host_regex: '[^./]+'
@@ -31,5 +31,4 @@ pun_custom_env:
 
 # See https://osc.github.io/ood-documentation/latest/customization.html#pinning-applications-to-the-dashboard
 pinned_apps:
-  - category: 'Interactive Apps'
   - sys/shell
