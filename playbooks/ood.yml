@@ -21,6 +21,10 @@
         - AuthExternal pwauth
         - Require valid-user
 
+  - name: set fqdn
+    set_fact:
+      ood_fqdn: "{{ var_ood_fqdn | default(ansible_default_ipv4.address) }}"
+
   - name: Make sure we have the latest root certificates in AlmaLinux
     yum:
       name: ca-certificates
@@ -41,22 +45,22 @@
 
   - name: Generate a Self Signed OpenSSL certificate
     shell: |
-      mkdir -pv /etc/ssl/{{ ansible_default_ipv4.address }}
-      cd /etc/ssl/{{ ansible_default_ipv4.address }}
-      openssl req -nodes -new -x509 -keyout {{ ansible_default_ipv4.address }}.key -out {{ ansible_default_ipv4.address }}.crt -subj "/CN={{ ansible_default_ipv4.address }}"
+      mkdir -pv /etc/ssl/{{ ood_fqdn }}
+      cd /etc/ssl/{{ ood_fqdn }}
+      openssl req -nodes -new -x509 -keyout {{ ood_fqdn }}.key -out {{ ood_fqdn }}.crt -subj "/CN={{ ood_fqdn }}"
     args:
-      creates: "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.crt"
+      creates: "/etc/ssl/{{ ood_fqdn }}/{{ ood_fqdn }}.crt"
 
   - name: Run the ood-ansible role for HTTPS
     include_role:
       name: ood-ansible
     vars:
       ondemand_package: '{{ ood_package }}'
-      servername: '{{ ansible_default_ipv4.address }}'
+      servername: '{{ ood_fqdn }}'
       httpd_port: 443
       ssl:
-      - SSLCertificateFile "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.crt"
-      - SSLCertificateKeyFile "/etc/ssl/{{ ansible_default_ipv4.address }}/{{ ansible_default_ipv4.address }}.key"
+      - SSLCertificateFile "/etc/ssl/{{ ood_fqdn }}/{{ ood_fqdn }}.crt"
+      - SSLCertificateKeyFile "/etc/ssl/{{ ood_fqdn }}/{{ ood_fqdn }}.key"
       - "{{SSLCertificateChainFile | default(None)}}"
       - SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1
       - SSLCipherSuite ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256
