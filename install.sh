@@ -10,6 +10,10 @@ load_miniconda() {
   if [ -d ${THIS_DIR}/miniconda ]; then
     echo "Activating conda environment"
     source ${THIS_DIR}/miniconda/bin/activate
+  else
+    ./scripts/prereqs_install.sh
+    echo "Activating conda environment"
+    source ${THIS_DIR}/miniconda/bin/activate
   fi
 }
 load_miniconda
