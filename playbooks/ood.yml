@@ -3,7 +3,7 @@
   become: true
 
   vars:
-    ondemand_version: 3.1.7
+    ondemand_version: 3.1.9
     ood_package: "{{ ('ondemand=' if ( ansible_distribution == 'Ubuntu') else 'ondemand-') }}{{ondemand_version}}"
   tasks:
   - name: Wait 300 seconds for the nodes to be ready
